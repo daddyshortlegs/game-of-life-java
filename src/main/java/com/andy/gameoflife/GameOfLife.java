@@ -39,16 +39,13 @@ class GameOfLife {
 
     private void checkNeighboursAroundDeadCell(String[][] newGeneration, int y, int x) {
         if (".".equals(grid[x][y])) {
-            markAliveOrDead(newGeneration, y, x, countAroundCell(y, x) == 3);
+            int count = countAroundCell(y, x);
+            markAliveOrDead(newGeneration, y, x, count == 3);
         }
     }
 
     private int countAroundCell(int y, int x) {
-        int count = countAbove(x, y);
-        count += countBelow(x, y);
-        count += countLeft(x, y);
-        count += countRight(x, y);
-        return count;
+        return countAbove(x, y) + countBelow(x, y) + countLeft(x, y) + countRight(x, y);
     }
 
     void createRow(int y, String... s) {
@@ -104,10 +101,6 @@ class GameOfLife {
     }
 
     private void markAliveOrDead(String[][] newGeneration, int y, int x, boolean shouldBeAlive) {
-        if (shouldBeAlive) {
-            newGeneration[x][y] = "*";
-        } else {
-            newGeneration[x][y] = ".";
-        }
+        newGeneration[x][y] = shouldBeAlive ? "*" : ".";
     }
 }
